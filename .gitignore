@@ -1,0 +1,9 @@
+# Stack
+.stack-work/
+
+# AoC
+input/
+
+# IntelliJ
+.idea/
+*.iml
