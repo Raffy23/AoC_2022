@@ -1,4 +1,4 @@
-module Day01 (solve1, solve2, parseInput) where
+module Day01 (solve1, solve2, parseInput, Input, Output) where
 
 import Data.List (sortOn)
 import Data.List.Split

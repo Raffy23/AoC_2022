@@ -23,6 +23,8 @@ dependencies:
 - base >= 4.7 && < 5
 - text
 - split
+- containers
+
 
 ghc-options:
 - -Wall
@@ -51,7 +53,7 @@ executables:
 
 tests:
   aoc2022-test:
-    main:                Spec.hs
+    defaults:            hspec/hspec@main
     source-dirs:         test
     ghc-options:
     - -threaded
