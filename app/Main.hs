@@ -1,16 +1,13 @@
 module Main (main) where
 
 import System.Environment (getArgs)
-import Text.Printf (printf)
 
 import qualified Data.Map as Map
 
+import Common (file)
 import qualified Day01
 import qualified Day02
 import qualified Day03
-
-file :: String -> String -> String
-file = printf "input/Day%s.part%s.txt"
 
 days :: Map.Map [String] (IO Int)
 days =

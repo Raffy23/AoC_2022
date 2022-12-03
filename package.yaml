@@ -61,3 +61,17 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - aoc2022
+
+benchmarks:
+  aoc2022-bench:
+    main:                Main.hs
+    source-dirs:         bench
+    ghc-options:
+      - -eventlog
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N6
+      - -O2
+    dependencies:
+    - aoc2022
+    - criterion

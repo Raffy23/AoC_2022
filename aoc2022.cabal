@@ -25,6 +25,7 @@ source-repository head
 
 library
   exposed-modules:
+      Common
       Day01
       Day02
       Day03
@@ -75,3 +76,20 @@ test-suite aoc2022-test
     , text
   default-language: Haskell2010
   build-tool-depends: hspec-discover:hspec-discover == 2.*
+
+benchmark aoc2022-bench
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      Paths_aoc2022
+  hs-source-dirs:
+      bench
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -eventlog -threaded -rtsopts -with-rtsopts=-N6 -O2
+  build-depends:
+      aoc2022
+    , base >=4.7 && <5
+    , containers
+    , criterion
+    , split
+    , text
+  default-language: Haskell2010
