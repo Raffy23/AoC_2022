@@ -1,8 +1,5 @@
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 module Day02 (solve1, solve2, parseInput, Input, Output) where
-
-import Data.List (sortOn)
-import Data.List.Split
-import Data.Ord
 
 type Input = [[String]]
 type Output = Int
@@ -54,6 +51,7 @@ toPick "X" = Rock
 toPick "Y" = Paper
 toPick "Z" = Scissors
 
+toGameOutcome :: String -> GameOutcome
 toGameOutcome "X" = Loss
 toGameOutcome "Y" = Draw
 toGameOutcome "Z" = Won
@@ -71,6 +69,7 @@ winning a b = if a == b
   then Draw
   else Loss
 
+winningPoints :: Num a => GameOutcome -> a
 winningPoints Won  = 6
 winningPoints Draw = 3
 winningPoints Loss = 0

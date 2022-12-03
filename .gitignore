@@ -7,3 +7,6 @@ input/
 # IntelliJ
 .idea/
 *.iml
+
+# VS Code
+dist-newstyle
