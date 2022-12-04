@@ -10,12 +10,14 @@ import Common (file)
 import qualified Day01
 import qualified Day02
 import qualified Day03
+import qualified Day04
 
 inputs :: [(String, String)]
 inputs = 
   [ ("01", "1")
   , ("02", "1")
   , ("03", "1")
+  , ("04", "1")
   ]
 
 setupEnv :: IO (M.Map (String, String) String)
@@ -27,9 +29,7 @@ main :: IO ()
 main = do
   E.setLocaleEncoding E.utf8
   defaultMain 
-    [
-    -- notice the lazy pattern match here!
-    env setupEnv $ \ inputs -> bgroup "main" 
+    [ env setupEnv $ \ inputs -> bgroup "main" 
       [ bgroup "Day01" 
         [ bench "Part 1" $ whnf (Day01.solve1 . Day01.parseInput) $ inputs M.! ("01", "1")
         , bench "Part 2" $ whnf (Day01.solve2 . Day01.parseInput) $ inputs M.! ("01", "1")
@@ -41,6 +41,10 @@ main = do
       , bgroup "Day03" 
         [ bench "Part 1" $ whnf (Day03.solve1 . Day03.parseInput) $ inputs M.! ("03", "1")
         , bench "Part 2" $ whnf (Day03.solve2 . Day03.parseInput) $ inputs M.! ("03", "1")
+        ] 
+      , bgroup "Day04" 
+        [ bench "Part 1" $ whnf (Day04.solve1 . Day04.parseInput) $ inputs M.! ("04", "1")
+        , bench "Part 2" $ whnf (Day04.solve2 . Day04.parseInput) $ inputs M.! ("04", "1")
         ]
-      ] 
+      ]
     ]
