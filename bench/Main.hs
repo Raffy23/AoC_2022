@@ -11,6 +11,7 @@ import qualified Day01
 import qualified Day02
 import qualified Day03
 import qualified Day04
+import qualified Day05
 
 inputs :: [(String, String)]
 inputs = 
@@ -18,6 +19,7 @@ inputs =
   , ("02", "1")
   , ("03", "1")
   , ("04", "1")
+  , ("05", "1")
   ]
 
 setupEnv :: IO (M.Map (String, String) String)
@@ -45,6 +47,10 @@ main = do
       , bgroup "Day04" 
         [ bench "Part 1" $ whnf (Day04.solve1 . Day04.parseInput) $ inputs M.! ("04", "1")
         , bench "Part 2" $ whnf (Day04.solve2 . Day04.parseInput) $ inputs M.! ("04", "1")
+        ]
+      , bgroup "Day05" 
+        [ bench "Part 1" $ whnf (Day05.solve1 . Day05.parseInput) $ inputs M.! ("05", "1")
+        , bench "Part 2" $ whnf (Day05.solve2 . Day05.parseInput) $ inputs M.! ("05", "1")
         ]
       ]
     ]

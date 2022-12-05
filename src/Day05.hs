@@ -1,10 +1,12 @@
-module Day05 (solve1, solve2, parseInput, Input, Output) where
+module Day05 (solve1, solve2, parseInput, Input, Output, Crate(..), Move(..)) where
 
 import qualified Data.Attoparsec.Text as P
 import Data.List.Split
 import Data.Text (pack)
 import Data.Either (rights)
 import Data.Array
+
+import Common (transpose)
 
 -- import Debug.Trace
 
@@ -21,33 +23,22 @@ type Output = [Char]
 
 
 solve1 :: Input -> Output
-solve1 (inStack, moves) = map ((\(Crate v) -> v) . head) . elems $ foldl modify inStack moves
-  where
-    modify :: StackArray -> Move -> StackArray
-    modify stack (Move count source target) = newStack
-      where
-        newSource = (source, drop count $ stack ! source)
-        newTarget = (target, reverse (take count $ stack ! source) ++ stack ! target)
-        newStack  = stack // [newSource, newTarget]
-
-printCrate :: StackArray -> [(Int, String)]
-printCrate arr = map p2 (assocs arr)
-  where
-    p1 :: [Crate] -> String
-    p1 = map (\(Crate v) -> v)
-
-    p2 :: (Int, [Crate]) -> (Int, String)
-    p2 (i, cs) = (i, p1 cs)
+solve1 = moveCrates reverse
 
 solve2 :: Input -> Output
-solve2 (inStack, moves) = map ((\(Crate v) -> v) . head) . elems $ foldl modify inStack moves
-   where
-     modify :: StackArray -> Move -> StackArray
-     modify stack (Move count source target) = newStack
+solve2 = moveCrates id
+
+moveCrates :: ([Crate] -> [Crate]) -> Input -> Output
+moveCrates order (inStack, moves) = printTopCrates . elems $ foldl modify inStack moves
+  where
+    printTopCrates :: [[Crate]] -> [Char]
+    printTopCrates = map $ (\(Crate v) -> v) . head
+
+    modify :: StackArray -> Move -> StackArray
+    modify stack (Move count source target) = stack // [newSource, newTarget]
        where
          newSource = (source, drop count $ stack ! source)
-         newTarget = (target, take count (stack ! source) ++ stack ! target)
-         newStack  = stack // [newSource, newTarget]
+         newTarget = (target, order (take count $ stack ! source) ++ stack ! target)
 
 parseInput :: String -> Input
 parseInput = parse . groupByEmpty . lines
@@ -68,11 +59,6 @@ parseInput = parse . groupByEmpty . lines
     groupByEmpty = splitWhen emptyLine
 
     emptyLine = (==) ""
--- m // [(1, drop 3 $ m ! 1),(2, (reverse $ take 3 $ m ! 1) ++ m ! 2)]
-
-transpose :: [[a]]->[[a]]
-transpose ([]:_) = []
-transpose x      = map head x : transpose (map tail x)
 
 parseEmptyCrate :: P.Parser Crate
 parseEmptyCrate = do
