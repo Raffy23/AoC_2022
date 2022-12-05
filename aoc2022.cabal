@@ -30,13 +30,15 @@ library
       Day02
       Day03
       Day04
+      Day05
   other-modules:
       Paths_aoc2022
   hs-source-dirs:
       src
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
-      attoparsec
+      array
+    , attoparsec
     , base >=4.7 && <5
     , containers
     , split
@@ -52,6 +54,7 @@ executable aoc2022-exe
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aoc2022
+    , array
     , attoparsec
     , base >=4.7 && <5
     , containers
@@ -73,6 +76,7 @@ test-suite aoc2022-test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aoc2022
+    , array
     , attoparsec
     , base >=4.7 && <5
     , containers
@@ -92,6 +96,7 @@ benchmark aoc2022-bench
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -eventlog -threaded -rtsopts -with-rtsopts=-N6 -O2
   build-depends:
       aoc2022
+    , array
     , attoparsec
     , base >=4.7 && <5
     , containers

@@ -25,6 +25,7 @@ dependencies:
 - split
 - containers
 - attoparsec
+- array
 
 ghc-options:
 - -Wall
