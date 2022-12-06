@@ -20,3 +20,5 @@ The Benchmark was run in sbt with `stack bench` on an AMD Ryzen 5800X @ 4,4Ghz.
 | main/Day04/Part 2 | mean |     | 369.5  μs   | ±   | 4.968  μs  |
 | main/Day05/Part 1 | mean |     | 349.5  μs   | ±   | 5.088  μs  |
 | main/Day05/Part 2 | mean |     | 346.3  μs   | ±   | 3.440  μs  |
+| main/Day06/Part 1 | mean |     | 6.679  μs   | ±   | 33.41  ns  |
+| main/Day06/Part 2 | mean |     | 739.9  μs   | ±   | 9.422  μs  |

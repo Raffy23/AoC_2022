@@ -1,6 +1,6 @@
 module Day06 (solve1, solve2, parseInput, Input, Output) where
 
-import qualified Data.Set as S
+import Data.List (nub)
 
 type Input = String
 type Output = Int
@@ -18,16 +18,17 @@ findMarker pos (m1:m2:m3:m4:ms)
     m3Uniq = m1 /= m3 &&             m3 /= m4
 
 solve2 :: Input -> Output
-solve2 = findMarker2 14
+solve2 = findMarker2 14 14
 
-findMarker2 :: Int -> String -> Int
-findMarker2 pos str
-  | isUnique $ take 14 str = pos
-  | otherwise              = findMarker2 (pos + 1) $ drop 1 str
+findMarker2 :: Int -> Int -> String -> Int
+findMarker2 pos len str
+  | isUnique $ take len str = pos
+  | otherwise               = findMarker2 (pos + 1) len $ drop 1 str
 
 isUnique :: [Char] -> Bool
-isUnique list = length list == length set
-  where set = S.fromList list
+isUnique list = length list == length list'
+  where 
+    list' = nub list
 
 parseInput :: String -> Input
 parseInput = id
