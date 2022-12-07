@@ -1,7 +1,9 @@
 module Day01 (solve1, solve2, parseInput, Input, Output) where
 
+import Data.Attoparsec.Text (decimal, Parser, parseOnly, many', endOfLine)
+import Data.Text (pack)
+import Data.Either (fromRight)
 import Data.List (sortOn)
-import Data.List.Split
 import Data.Ord
 
 type Input = [[Int]]
@@ -14,12 +16,18 @@ solve2 :: Input -> Output
 solve2 =  sum . take 3 . sortOn Down . map sum
 
 parseInput :: String -> Input
-parseInput = toIntList . groupByEmpty . lines
+parseInput = fromRight (error "Unable to parse input") . parseOnly parseInput' . pack
   where
-    toIntList :: [[String]] -> [[Int]]
-    toIntList = map $ map read
+    parseInput' :: Parser [[Int]]
+    parseInput' = many' group
+  
+    group :: Parser [Int]
+    group = do 
+      lines <- many' line
+      _     <- endOfLine
+      return lines
 
-    groupByEmpty :: [String] -> [[String]]
-    groupByEmpty = splitWhen emptyLine
-
-    emptyLine = (==) ""
+    line = do
+      num <- decimal
+      _   <- endOfLine
+      return num

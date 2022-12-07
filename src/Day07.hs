@@ -1,10 +1,8 @@
 module Day07 (solve1, solve2, parseInput, Input, Output) where
 
-import Data.Attoparsec.Text (decimal, Parser, char, string, parseOnly, takeWhile1, isEndOfLine, many', many1', choice, endOfLine, takeText, takeTill)
+import Data.Attoparsec.Text (decimal, Parser, char, string, parseOnly, isEndOfLine, many', choice, endOfLine, takeTill)
 import Data.Text (Text, pack, unpack, snoc)
 import Data.Either (fromRight)
-
-import Debug.Trace
 
 data TermLine = Cd String | Ls | F Int Text | D Text deriving (Show, Eq)
 data FileTree = Dir String Int [FileTree] | File Text Int deriving (Show)
@@ -22,7 +20,7 @@ solve2 tree = minimum . filter (>= target) $ flatten tree
     target = 30000000 - (70000000 - rootSize)
 
 parseInput :: String -> FileTree
-parseInput str = head . fst . parseFileTree . fromRight [] $ parseOnly parseTermLines input
+parseInput str = head . fst . parseFileTree . fromRight (error "Unable to parse input") $ parseOnly parseTermLines input
   where
     input = snoc (pack str) '\n'
 
