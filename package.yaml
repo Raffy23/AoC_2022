@@ -26,6 +26,8 @@ dependencies:
 - containers
 - attoparsec
 - array
+- matrix
+- vector
 
 ghc-options:
 - -Wall
