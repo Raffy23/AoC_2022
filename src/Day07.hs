@@ -1,4 +1,4 @@
-module Day07 (solve1, solve2, parseInput, Input, Output) where
+module Day07 (solve1, solve2, parseInput, Input, Output, FileTree(..)) where
 
 import Data.Attoparsec.Text (decimal, Parser, char, string, parseOnly, isEndOfLine, many', choice, endOfLine, takeTill)
 import Data.Text (Text, pack, unpack, snoc)

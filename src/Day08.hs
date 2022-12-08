@@ -11,14 +11,6 @@ import Data.Maybe
 type Input = M.Matrix Int
 type Output = Int
 
-example :: M.Matrix Int
-example = M.fromLists [ 
-  [3,0,3,7,3],
-  [2,5,5,1,2],
-  [6,5,3,3,2],
-  [3,3,5,4,9],
-  [3,5,3,9,0]]
-
 solve1 :: Input -> Output
 solve1 inMatrix = V.foldl (\c b -> if b then c+1 else c) 0 $ M.getMatrixAsVector visibleMatrix
   where
