@@ -1,6 +1,6 @@
 module Day08 (solve1, solve2, parseInput, Input, Output) where
 
-import Data.Attoparsec.Text (Parser, parseOnly, many', endOfLine, digit)
+import Data.Attoparsec.Text (Parser, parseOnly, many1', endOfLine, digit, choice, endOfInput)
 import Data.Text (pack)
 import Data.Either (fromRight)
 import Data.Char (digitToInt)
@@ -29,15 +29,18 @@ solve2 inMatrix = V.maximum $ M.getMatrixAsVector visibleMatrix
   where
     visibleMatrix = M.mapPos (\pos _ -> treeScore pos inMatrix) inMatrix
 
--- BUG: needs trailing \n
 parseInput :: String -> Input
 parseInput = M.fromLists . fromRight (error "Unable to parse input") . parseOnly parseInput' . pack
   where
     parseInput' :: Parser [[Int]]
-    parseInput' = many' line
+    parseInput' = do
+      lines <- many1' line
+      last  <- many1' $ digitToInt <$> digit
+      _     <- endOfInput
+      return $ lines ++ [last]
   
     line = do
-      trees <- many' $ digitToInt <$> digit
+      trees <- many1' $ digitToInt <$> digit
       _     <- endOfLine
       return trees
 
