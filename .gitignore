@@ -12,3 +12,6 @@ input/
 
 # VS Code
 dist-newstyle
+
+*.ods#
+*.ods
