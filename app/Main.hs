@@ -43,13 +43,13 @@ days =
     ]
 
 runDay :: [String] -> IO ()
-runDay s = case Map.lookup s days of
+runDay [day, part] = case Map.lookup [day, part] days of
   Just f   -> do 
     output <- f
-    _      <- putStrLn $ "---- Day " ++ show s ++ " ----"
+    _      <- putStrLn $ "————[ Day " ++ day ++ ", Part " ++ part ++ " ]————"
     _      <- putStrLn output
     return ()
-  Nothing  -> putStrLn $ "Day or part not implemented: " ++ show s
+  Nothing  -> putStrLn $ "Day " ++ day ++ " Part " ++ part ++ " is not implemented!"
 
 run :: String -> (String -> a) -> (a -> b) -> (b -> String) -> IO String
 run file parse solve print =  fmap (print . solve . parse) (readFile file)
