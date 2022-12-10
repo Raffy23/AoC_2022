@@ -82,7 +82,6 @@ main = do
       , bgroup "Day10" 
         [ bench "Part 1" $ whnf (Day10.solve1 . Day10.parseInput) $ inputs M.! ("10", "1")
         , bench "Part 2" $ whnf (Day10.solve2 . Day10.parseInput) $ inputs M.! ("10", "1")
-        , bench "Part 1" $ whnf (Day10.solve1 . Day10.parseInput) $ inputs M.! ("10", "1")
         ]
       ]
     ]
