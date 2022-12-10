@@ -8,11 +8,15 @@ import Data.List.Split (chunksOf)
 data Instruction = Noop | AddX Int deriving (Show, Eq)
 
 type Input = [Instruction]
-
 type Output = Int
 
 solve1 :: Input -> Output
-solve1 = sum . map (uncurry (*)) . filter (\(c,_) -> c `mod` 40 == 20) . runInstr 1 1
+solve1 input = foldl sumSignals 0 $ runInstr 1 1 input
+  where
+    sumSignals :: Int -> (Int, Int) -> Int
+    sumSignals count (cycle, value)
+      | cycle `mod` 40 == 20 = count + cycle * value
+      | otherwise            = count
 
 solve2 :: Input -> [String]
 solve2 input = chunksOf 40 . map pixel $ (1,1) : runInstr 1 1 input
