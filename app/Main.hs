@@ -1,6 +1,7 @@
 module Main (main) where
 
 import System.Environment (getArgs)
+import Data.List (unlines)
 
 import qualified Data.Map as Map
 
@@ -15,7 +16,8 @@ import qualified Day07
 import qualified Day08
 import qualified Day09
 import qualified Day10
-import Data.List (unlines)
+import qualified Day11
+
 
 days :: Map.Map [String] (IO String)
 days =
@@ -40,6 +42,8 @@ days =
     , (["09", "2"], run (file "09" "1") Day09.parseInput Day09.solve2 show)
     , (["10", "1"], run (file "10" "1") Day10.parseInput Day10.solve1 show)
     , (["10", "2"], run (file "10" "1") Day10.parseInput Day10.solve2 unlines)
+    , (["11", "1"], run (file "11" "1") Day11.parseInput Day11.solve1 show)
+    , (["11", "2"], run (file "11" "1") Day11.parseInput Day11.solve2 show)
     ]
 
 runDay :: [String] -> IO ()

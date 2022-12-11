@@ -36,6 +36,7 @@ library
       Day08
       Day09
       Day10
+      Day11
   other-modules:
       Paths_aoc2022
   hs-source-dirs:
@@ -85,6 +86,7 @@ test-suite aoc2022-test
       Day08Spec
       Day09Spec
       Day10Spec
+      Day11Spec
       Paths_aoc2022
   hs-source-dirs:
       test
