@@ -28,6 +28,7 @@ dependencies:
 - array
 - matrix
 - vector
+- psqueues
 
 ghc-options:
 - -Wall
