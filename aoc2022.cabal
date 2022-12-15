@@ -40,6 +40,7 @@ library
       Day12
       Day13
       Day14
+      Day15
   other-modules:
       Paths_aoc2022
   hs-source-dirs:
@@ -51,6 +52,7 @@ library
     , base >=4.7 && <5
     , containers
     , matrix
+    , range-set-list
     , split
     , text
     , vector
@@ -70,6 +72,7 @@ executable aoc2022-exe
     , base >=4.7 && <5
     , containers
     , matrix
+    , range-set-list
     , split
     , text
     , vector
@@ -102,6 +105,7 @@ test-suite aoc2022-test
     , containers
     , hspec ==2.*
     , matrix
+    , range-set-list
     , split
     , text
     , vector
@@ -124,6 +128,7 @@ benchmark aoc2022-bench
     , containers
     , criterion
     , matrix
+    , range-set-list
     , split
     , text
     , vector

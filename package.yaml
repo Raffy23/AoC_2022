@@ -28,6 +28,7 @@ dependencies:
 - array
 - matrix
 - vector
+- range-set-list
 
 ghc-options:
 - -Wall
