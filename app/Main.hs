@@ -18,6 +18,7 @@ import qualified Day09
 import qualified Day10
 import qualified Day11
 import qualified Day15
+import qualified Day16
 
 
 days :: Map.Map [String] (IO String)
@@ -46,13 +47,14 @@ days =
     , (["11", "1"], run (file "11" "1") Day11.parseInput Day11.solve1 show)
     , (["11", "2"], run (file "11" "1") Day11.parseInput Day11.solve2 show)
     , (["15", "2"], run (file "15" "1") Day15.parseInput Day15.solve2 show)
+    , (["16", "2"], run (file "16" "1") Day16.parseInput Day16.solve2 show)
     ]
 
 runDay :: [String] -> IO ()
 runDay [day, part] = case Map.lookup [day, part] days of
   Just f   -> do 
     output <- f
-    _      <- putStrLn $ "————[ Day " ++ day ++ ", Part " ++ part ++ " ]————"
+    _      <- putStrLn $ "----[ Day " ++ day ++ ", Part " ++ part ++ " ]----" -- "————[ Day " ++ day ++ ", Part " ++ part ++ " ]————"
     _      <- putStrLn output
     return ()
   Nothing  -> putStrLn $ "Day " ++ day ++ " Part " ++ part ++ " is not implemented!"

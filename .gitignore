@@ -9,6 +9,7 @@ input/
 # IntelliJ
 .idea/
 *.iml
+out/
 
 # VS Code
 dist-newstyle

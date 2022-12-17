@@ -1,4 +1,5 @@
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
+{-# LANGUAGE TupleSections #-}
 module Day12 (solve1, solve2, parseInput, Input, Output) where
 
 import qualified Data.Array as A
@@ -32,7 +33,7 @@ bfs visited ((start, dist):rest) graph end
     neighbours' = neighbours graph start
     visited'   = S.insert start visited
     new        = filter (`S.notMember` visited) neighbours'
-    rest'      = error "" --rest ++ map (,dist+1) new
+    rest'      = rest ++ map (,dist+1) new
 
 neighbours :: Graph -> Point -> [Point]
 neighbours graph point@(x,y) =  filter canMoveTo neighbours'

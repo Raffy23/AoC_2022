@@ -29,6 +29,7 @@ dependencies:
 - matrix
 - vector
 - range-set-list
+- monad-memo
 
 ghc-options:
 - -Wall
