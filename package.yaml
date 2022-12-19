@@ -30,6 +30,7 @@ dependencies:
 - vector
 - range-set-list
 - monad-memo
+- parallel
 
 ghc-options:
 - -Wall
