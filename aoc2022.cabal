@@ -45,6 +45,7 @@ library
       Day17
       Day18
       Day19
+      Day20
   other-modules:
       Paths_aoc2022
   hs-source-dirs:

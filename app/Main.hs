@@ -20,6 +20,7 @@ import qualified Day11
 import qualified Day15
 import qualified Day16
 import qualified Day19
+import qualified Day20
 
 
 days :: Map.Map [String] (IO String)
@@ -51,6 +52,8 @@ days =
     , (["16", "2"], run (file "16" "1") Day16.parseInput Day16.solve2 show)
     , (["19", "1"], run (file "19" "1") Day19.parseInput Day19.parSolve1 show)
     , (["19", "2"], run (file "19" "1") Day19.parseInput Day19.parSolve2 show)
+    , (["20", "1"], run (file "20" "1") Day20.parseInput Day20.solve1 show)
+    , (["20", "2"], run (file "20" "1") Day20.parseInput Day20.solve2 show)
     ]
 
 runDay :: [String] -> IO ()
