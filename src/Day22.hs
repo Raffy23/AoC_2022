@@ -8,6 +8,7 @@ import Data.Maybe (fromJust)
 
 import qualified Data.Map as M
 import qualified Data.Set as S
+import qualified Data.Array as A
 
 import Debug.Trace
 
@@ -21,7 +22,7 @@ type Input = (Path, Map)
 type Output = Int
 
 solve1 :: Input -> Output
-solve1 (path, input) = (1000 * row) + (4 * col) + facingValue
+solve1 (path, input) = (1000 * (row + 1)) + (4 * (col + 1)) + facingValue
   where
     ((row, col), dir) = moveOnMap input path start initialDirection
     start             = (S.findMin $ M.keysSet input, S.findMin $ M.keysSet $ snd $ M.findMin input)
@@ -32,7 +33,15 @@ solve1 (path, input) = (1000 * row) + (4 * col) + facingValue
        (-1,0) -> 3
 
 solve2 :: Input -> Output
-solve2 input = error ""
+solve2  (path, input) = (1000 * (row + 1)) + (4 * (col + 1)) + facingValue
+   where
+     ((row, col), dir) = moveOnCube input path start initialDirection
+     start             = (S.findMin $ M.keysSet input, S.findMin $ M.keysSet $ snd $ M.findMin input)
+     facingValue       = case dir of
+        (0, 1) -> 0
+        (0,-1) -> 2
+        ( 1,0) -> 1
+        (-1,0) -> 3
 
 moveOnMap :: Map -> Path -> Point -> Point -> (Point, Point)
 moveOnMap input []            point dir    = (point, dir)
@@ -63,6 +72,51 @@ moveOnMap input ((Move n):ms) point@(r, c) dir@(dR, dC)
       | dR ==  1 = (       fromJust (find (\r -> M.member c $ input M.! r)          [1 .. rows     ]), c)
     rows = fst $ M.findMax input
 
+-- NOTE: seams are hardcoded, may not work with other cubes that are not unwrapped like this
+--        Top    Left
+--        Front
+--  Right Bottom
+--  Back
+moveOnCube :: Map -> Path -> Point -> Point -> (Point, Point)
+moveOnCube input []            point dir    = (point, dir)
+moveOnCube input ((Move 0):ms) point dir    = moveOnCube input ms point dir
+moveOnCube input (L:ms)        point (0, 1) = moveOnCube input ms point (-1, 0)
+moveOnCube input (L:ms)        point (0,-1) = moveOnCube input ms point ( 1, 0)
+moveOnCube input (L:ms)        point ( 1,0) = moveOnCube input ms point ( 0, 1)
+moveOnCube input (L:ms)        point (-1,0) = moveOnCube input ms point ( 0,-1)
+moveOnCube input (R:ms)        point (0, 1) = moveOnCube input ms point ( 1, 0)
+moveOnCube input (R:ms)        point (0,-1) = moveOnCube input ms point (-1, 0)
+moveOnCube input (R:ms)        point ( 1,0) = moveOnCube input ms point ( 0,-1)
+moveOnCube input (R:ms)        point (-1,0) = moveOnCube input ms point ( 0, 1)
+moveOnCube input ((Move n):ms) point@(r, c) dir@(dR, dC)
+  | isOnMap tile && isWall tile = moveOnCube input ms point dir
+  | isOnMap tile                = moveOnCube input (Move (n-1):ms) target dir
+  | isWall warpTile             = moveOnCube input ms point dir
+  | otherwise                   = moveOnCube input (Move (n-1):ms) warpPos warpDir
+  where
+    target  = (r + dR, c + dC)
+    tile    = M.findWithDefault ' ' (c + dC) $ M.findWithDefault M.empty (r + dR) input
+    isOnMap = (/=) ' '
+    isWall  = (==) '#'
+    warpTile = M.findWithDefault ' ' (snd warpPos) $ M.findWithDefault M.empty (fst warpPos) input
+    (warpPos, warpDir) = warp
+    rows = fst $ M.findMax input
+    warp
+      | dR == -1 && r ==   0   && A.inRange ( 50, 100-1) c = ((c + 100, 0)       , ( 0, 1))
+      | dR == -1 && r ==   0   && A.inRange (100, 150-1) c = ((200-1, c - 100)   , ( -1, 0))
+      | dR == -1 && r == 100   && A.inRange (  0,  50-1) c = ((c + 50, 50)       , ( 0, 1))
+      | dC ==  1 && c == 150-1 && A.inRange (  0,  50-1) r = ((150-1 - r, 100-1) , ( 0,-1))
+      | dC ==  1 && c == 100-1 && A.inRange ( 50, 100-1) r = ((50-1, r + 50)     , (-1,  0))
+      | dC ==  1 && c == 100-1 && A.inRange (100, 150-1) r = ((150-1 - r, 150-1) , ( 0, -1))
+      | dC ==  1 && c ==  50-1 && A.inRange (150, 200-1) r = ((150-1, r - 100)   , (-1, 0))
+      | dR ==  1 && r ==  50-1 && A.inRange (100, 150-1) c = ((c - 50, 100-1)    , ( 0, -1))
+      | dR ==  1 && r == 150-1 && A.inRange ( 50, 100-1) c = ((100 + c, 50-1)    , ( 0, -1))
+      | dR ==  1 && r == 200-1 && A.inRange (  0,  50-1) c = ((0, c + 100)       , ( 1,  0))
+      | dC == -1 && c ==   0   && A.inRange (150, 200-1) r = ((0, r - 100)       , ( 1,  0))
+      | dC == -1 && c ==   0   && A.inRange (100, 150-1) r = ((150-1 - r, 50)    , ( 0,  1))
+      | dC == -1 && c ==  50   && A.inRange ( 50, 100-1) r = ((100, r - 50)      , ( 1,  0))
+      | dC == -1 && c ==  50   && A.inRange (  0,  50-1) r = ((150-1 - r, 0)     , ( 0,  1))
+
 initialDirection :: Point
 initialDirection = (0, 1)
 
@@ -74,11 +128,11 @@ parseInput = fromRight (error "Unable to parse input") . parseOnly parseInput' .
       _     <- endOfLine
       _     <- endOfLine
       moves <- many' $ choice [movements, direction]
-      return (moves, M.fromList $ zip [1..] lines)
+      return (moves, M.fromList $ zip [0..] lines)
 
     line = do
       tiles <- takeWhile1 (/= '\n')
-      return $ M.fromList $ filter (\(_, v) -> v /= ' ') $ zip [1..] $ unpack tiles
+      return $ M.fromList $ filter (\(_, v) -> v /= ' ') $ zip [0..] $ unpack tiles
 
     direction = do
       dir <- anyChar
